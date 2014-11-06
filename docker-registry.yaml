@@ -1,0 +1,12 @@
+common: &common
+    standalone: true
+    loglevel: info
+    search_backend: sqlalchemy
+    sqlalchemy_index_database:
+        "_env:SQLALCHEMY_INDEX_DATABASE:sqlite:////tmp/docker-registry.db"
+
+dev:
+    <<: *common
+    loglevel: warn
+    storage: local
+    storage_path: /registry

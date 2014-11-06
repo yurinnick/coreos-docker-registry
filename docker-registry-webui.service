@@ -1,0 +1,13 @@
+[Unit]
+Description=Docker Registry WebUI
+Requires=docker-registry.service
+After=docker-registry.service
+
+[Service]
+ExecStartPre=/usr/bin/docker pull atcol/docker-registry-ui:latest
+ExecStart=/usr/bin/docker run -p 80:8080 --name registry-web-ui atcol/docker-registry-ui
+ExecStop=/usr/bin/docker stop registry-web-ui
+ExecStopPost=/usr/bin/docker rm registry-web-ui
+
+[Install]
+WantedBy=multi-user.target

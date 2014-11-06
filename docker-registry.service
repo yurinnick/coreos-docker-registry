@@ -1,0 +1,13 @@
+[Unit]
+Description=Docker Registry
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStartPre=/usr/bin/docker pull registry:latest
+ExecStart=/usr/bin/docker run -p 5000:5000 -v /home/core/registry-conf:/registry-conf -v /home/core/registry:/registry -e DOCKER_REGISTRY_CONFIG=/registry-conf/docker-registry.yaml --name docker-registry registry
+ExecStop=/usr/bin/docker stop docker-registry
+ExecStopPost=/usr/bin/docker rm docker-registry
+
+[Install]
+WantedBy=multi-user.target
